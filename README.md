@@ -1,7 +1,9 @@
 # revisao-crud
+
+###Maquina1
+
 const mysql = require('mysql');
 
-// Configuração de conexão com o banco de dados
 const connection = mysql.createConnection({
   host: 'local',
   user: 'aluno',
@@ -37,4 +39,39 @@ function inserirRegistros() {
 }
 
 inserirRegistros();
+
+###Maquina2
+
+const mysql = require('mysql');
+
+const connection = mysql.createConnection({
+  host: 'seu-host',
+  user: 'seu-usuario',
+  password: 'sua-senha',
+  database: 'seu-banco-de-dados',
+});
+
+function lerRegistros() {
+  connection.connect((err) => {
+    if (err) {
+      console.error('Erro ao conectar ao banco de dados:', err);
+      return;
+    }
+
+    connection.query('SELECT * FROM customers LIMIT 10', (error, results) => {
+      if (error) {
+        console.error('Erro ao ler registros:', error);
+      } else {
+        console.log('Registros lidos:');
+        results.forEach((registro) => {
+          console.log(`Nome: ${registro.name}, Endereço: ${registro.address}`);
+        });
+      }
+
+      connection.end();
+    });
+  });
+}
+
+lerRegistros();
 
